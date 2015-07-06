@@ -27,7 +27,7 @@ for k=1:10 %nStrands
     oops=abs(gth)>2.9;
     gth(oops)=(abs(gth(oops))-pi).*sign(gth(oops));
     thd=gth/dT;
-    direcChange=.1*abs(thd).*rh;
+    direcChange=.01*abs(thd);
     testme=gradient(direcChange)/dT;
     plot(t(strand),direcChange,'r')
     plot(t(strand),testme/10,'g')
