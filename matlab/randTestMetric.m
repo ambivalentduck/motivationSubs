@@ -2,46 +2,19 @@ clc
 clear all
 
 dT=0.005;
+N=7;
 
 %Two interwoven "strands" of submovements
-N=7;
-w=zeros(N,2);
-tc=zeros(N,1);
-ts=zeros(N,1);
-w(1,:)=[.4 0];
-tc(1)=.125;
-ts(1)=.25;
-for k=2:4
-    ts(k)=rand*.2+.2;
-    tc(k)=tc(k-1)+ts(k-1)/2+ts(k)/2+rand*.05;
-    w(k,:)=rand(1,2)-.5;
-end
-w(k+1,:)=rand*.2+.2;
-tc(k+1)=.2;
-ts(k+1)=.3;
-for k=k+2:N
-    ts(k)=rand*.2+.2;
-    tc(k)=tc(k-1)+ts(k-1)/2+ts(k)/2+rand*.05;
-    w(k,:)=rand(1,2)-.5;
-end
 
-tup=max(tc+ts/2);
-t=0:dT:tup;
+[vel,kerns,pos,w,tc,ts,t]=buildwalk(N,dT);
+[ath,dth,th,sp]=vel2dir(vel);
+dth=5*dth/max(dth);
+ath=5*ath/max(ath);
 
-[vel,kerns,pos]=supMJ5P(w,tc,ts,t);
-
-[th,rh]=cart2pol(vel(:,1),vel(:,2));
-gth=gradient(th);
-oops=abs(gth)>2.9;
-gth(oops)=(abs(gth(oops))-pi).*sign(gth(oops));
-thd=gth/dT;
-direcChange=.1*abs(thd).*rh;
-testme=gradient(direcChange)/dT;
-
-thresh=.5;
-[posp,starts]=findpeaks(testme);
+thresh=0;
+[posp,starts]=findpeaks(ath);
 starts=starts(posp>thresh);
-[negp,ends]=findpeaks(-testme);
+[negp,ends]=findpeaks(-ath);
 ends=ends(negp>thresh);
 
 figure(1)
@@ -53,24 +26,28 @@ for k=1:length(starts)
     plot(pos(starts(k),1),pos(starts(k),2),'mx')
 end
 for k=1:length(ends)
-        plot(pos(ends(k),1),pos(ends(k),2),'mo')
+    plot(pos(ends(k),1),pos(ends(k),2),'mo')
 end
 for k=1:N
-    [v,f]=min(abs(t-tc(k)));
+    [blah,f]=min(abs(t-tc(k)));
     text(pos(f,1),pos(f,2),num2str(k))
-    [v,f]=min(abs(t-tc(k)+ts(k)/2));
+    [blah,f]=min(abs(t-tc(k)+ts(k)/2));
     plot(pos(f,1),pos(f,2),'kx')
-    [v,f]=min(abs(t-tc(k)-ts(k)/2));
+    [blah,f]=min(abs(t-tc(k)-ts(k)/2));
     plot(pos(f,1),pos(f,2),'ko')
 end
 subplot(1,2,2)
 hold on
-plot(t,vecmag(vel))
+plot(t,sp)
+plot(t,th,'k')
 
-for k=1:size(kerns,2)
+for k=1:N
     plot(t,kerns(:,k),'g')
+    [blah,f]=min(abs(t-tc(k)));
+    text(t(f),sp(f),num2str(k))
 end
-plot(t,.1*testme,'r')
+plot(t,dth,'c')
+plot(t,ath,'r')
 
 for k=1:length(starts)
     plot(t(starts),0,'mx')
@@ -79,3 +56,7 @@ end
 for k=1:length(ends)
     plot(t(ends),0,'mo')
 end
+ylim([-10 10])
+
+subplot(1,2,1)
+axis equal

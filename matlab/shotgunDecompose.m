@@ -19,18 +19,19 @@ clf
 
 for k=1:10 %nStrands
     strand=strands(k,1):strands(k,2);
+    
+    [ath,dth,th,sp]=vel2dir(v(strand,:));
+    msp=max(sp);
+    dth=msp*dth/max(dth);
+    ath=msp*ath/max(ath);
+    ts=t(strand);
+
     subplot(4,3,k)
     hold on
-    plot(t(strand),vecmag(v(strand,:)))
-    [th,rh]=cart2pol(v(strand,1),v(strand,2));
-    gth=gradient(th);
-    oops=abs(gth)>2.9;
-    gth(oops)=(abs(gth(oops))-pi).*sign(gth(oops));
-    thd=gth/dT;
-    direcChange=.01*abs(thd);
-    testme=gradient(direcChange)/dT;
-    plot(t(strand),direcChange,'r')
-    plot(t(strand),testme/10,'g')
+    plot(ts,sp,'b')
+    plot(ts,(th+pi)/4,'k')
+    plot(ts,dth,'c')
+    plot(ts,ath,'r')
 end
 
 %In theory, findpeaks on -direcChange accomplishes what you were previously using recursion to do.
