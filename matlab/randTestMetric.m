@@ -2,14 +2,14 @@ clc
 clear all
 
 dT=0.005;
-N=7;
+N=10;
 
 %Two interwoven "strands" of submovements
 
 [vel,kerns,pos,w,tc,ts,t]=buildwalk(N,dT);
 [ath,dth,th,sp]=vel2dir(vel);
 dth=5*dth/max(dth);
-ath=5*ath/max(ath);
+ath=5*ath/max(abs(ath));
 
 thresh=0;
 [posp,starts]=findpeaks(ath);
