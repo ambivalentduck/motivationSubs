@@ -1,13 +1,13 @@
 clc
 clear all
 
-% S=5;
-% fname=[datadir,'strokeFE',num2str(S),'.mat'];
-% load(fname)
-% Tmax=5;
+S=5;
+fname=[datadir,'strokeFE',num2str(S),'.mat'];
+load(fname)
+Tmax=5;
 
-[v,kerns,x,w,tc,ts,t]=buildwalk(7,.005);
-Tmax=max(t);
+% [v,kerns,x,w,tc,ts,t]=buildwalk(7,.005);
+% Tmax=max(t);
 
 N=2; %In theory you got this from thermoparams...but spoilers!
 dT=mean(diff(t));
