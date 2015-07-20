@@ -6,7 +6,7 @@ dth=gradient(th);
 
 %Atan2 isn't smart enough to wrap th around the discontinuity.
 wrap=abs(dth)>2.9;
-dth(wrap)=(abs(dth(wrap))-pi).*sign(dth(wrap));
+dth(wrap)=(abs(dth(wrap))-2*pi).*sign(dth(wrap));
 
 ath=gradient(abs(dth));
 
