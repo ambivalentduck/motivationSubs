@@ -15,6 +15,10 @@ for k=1:ldth
     zfrq(k+4)=4*zfrq(k+3)-6*zfrq(k+2)+4*zfrq(k+1)-zfrq(k)+in(k);
 end
 zfrq=zfrq(5:end);
+% for k=1:ldth
+%     zfrq(k)=4*zfrq(k+1)-6*zfrq(k+2)+4*zfrq(k+3)-zfrq(k+4)+in(k);
+% end
+% zfrq=zfrq(1:end-4);
 zffNorm=zeros(size(zfrq));
 zffNorm1=zeros(size(zfrq));
 

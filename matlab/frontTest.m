@@ -1,14 +1,17 @@
 clc
 clear all
 
-dT=0.005;
-N=10;
+S=5;
+fname=[datadir,'strokeFE',num2str(S),'.mat'];
+load(fname)
+Tmax=3;
+vel=v(t<Tmax,:);
+pos=x(t<Tmax,:);
+t=t(t<Tmax);
 
-%Two interwoven "strands" of submovements
-
-[vel,kerns,pos,w,tc,ts,t]=buildwalk(N,dT);
 [ath,dth,th,sp]=vel2dir(vel,1); %Was 1
-dth=50*dth/max(dth);
+
+dth=5*dth/max(dth);
 ath=50*gradient(ath);
 
 thresh=0;
@@ -28,24 +31,13 @@ end
 for k=1:length(ends)
     plot(pos(ends(k),1),pos(ends(k),2),'mo')
 end
-for k=1:N
-    [blah,f]=min(abs(t-tc(k)));
-    text(pos(f,1),pos(f,2),num2str(k))
-    [blah,f]=min(abs(t-tc(k)+ts(k)/2));
-    plot(pos(f,1),pos(f,2),'kx')
-    [blah,f]=min(abs(t-tc(k)-ts(k)/2));
-    plot(pos(f,1),pos(f,2),'ko')
-end
+
 subplot(1,2,2)
 hold on
 plot(t,sp)
 plot(t,th,'k')
 
-for k=1:N
-    plot(t,kerns(:,k),'g')
-    [blah,f]=min(abs(t-tc(k)));
-    text(t(f),sp(f),num2str(k))
-end
+
 plot(t,dth,'c')
 plot(t,ath,'r')
 

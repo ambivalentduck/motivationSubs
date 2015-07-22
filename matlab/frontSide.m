@@ -4,7 +4,7 @@ clear all
 S=5;
 fname=[datadir,'strokeFE',num2str(S),'.mat'];
 load(fname)
-Tmax=5;
+Tmax=3;
 
 % [v,kerns,x,w,tc,ts,t]=buildwalk(7,.005);
 % Tmax=max(t);
