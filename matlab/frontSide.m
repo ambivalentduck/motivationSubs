@@ -4,7 +4,7 @@ clear all
 S=5;
 fname=[datadir,'strokeFE',num2str(S),'.mat'];
 load(fname)
-Tmax=3;
+Tmax=2;
 
 % [v,kerns,x,w,tc,ts,t]=buildwalk(7,.005);
 % Tmax=max(t);
@@ -18,10 +18,12 @@ clf
 subplot(1,2,1)
 hold on
 plot(x(f,1),x(f,2),'k')
+[ddirec,direc,spd]=vel2pol(v(f,:));
 subplot(1,2,2)
 hold on
-sp=vecmag(v(f,:));
-plot(t(f),sp,'k')
+plot(t(f),spd,'k')
+plot(t(f),direc/pi,'g')
+plot(t(f),ddirec,'c')
 try
     for k=1:size(kerns,2)
         plot(t,kerns(:,k),'g')
