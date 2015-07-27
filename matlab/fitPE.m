@@ -48,14 +48,25 @@ a=[gradient(v(:,1)),gradient(v(:,2))]/dT;
 
 P=dot(a',v');
 figure(1)
+clf
+subplot(2,2,1)
 hist(abs(P),50)
+title('Power histogram')
+xlabel('Power, Watts')
 
 E=dot(v',v');
-figure(2)
+subplot(2,2,2)
 hist(E,100)
+title('Energy histogram')
+xlabel('Energy, Joules')
 
-figure(3)
+subplot(2,2,3)
 plot(t,P)
+title('raw')
+ylabel('Power, watts')
+xlabel('Time, seconds')
 
-figure(4)
+subplot(2,2,4)
 hist(coverage)
+title('coverage histogram')
+xlabel('Simultaneous Submovements')

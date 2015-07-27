@@ -10,7 +10,7 @@ while sum(strands(end,:)>I)
     strands=strands(1:end-1,:);
 end
 
-if 0
+if 1
     figure(1)
     clf
     hold on
