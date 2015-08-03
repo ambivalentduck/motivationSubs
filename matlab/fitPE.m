@@ -9,8 +9,8 @@ dT=0.005;
 
 %Two interwoven "strands" of submovements
 maxspacing=0;
-tsmean=.2;
-tsdiff=0;
+tsmean=.3;
+tsdiff=.05;
 
 w=zeros(N,2);
 tc=zeros(N,1);
